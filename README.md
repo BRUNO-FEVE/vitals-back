@@ -1,6 +1,6 @@
 # Node.js MongoDB Template
 
-A scalable and maintainable Node.js template with MongoDB integration, repository pattern, and testing infrastructure.
+A scalable and maintainable Node.js template with MongoDB integration, repository pattern, and testing infrastructure for a medical triage system.
 
 ## Features
 
@@ -18,32 +18,52 @@ A scalable and maintainable Node.js template with MongoDB integration, repositor
 ```
 /
 ├── config/              # Configuration files
-│   └── db.js            # Database connection
+│   └── db.js           # Database connection
 ├── controllers/         # Request handlers
-│   └── userController.js
-├── entities/            # Business entities
+│   ├── nurseController.js
+│   ├── patientController.js
+│   ├── quizResultController.js
+│   ├── triageController.js
+│   └── vitalsController.js
+├── entities/           # Business entities
 │   ├── baseEntity.js
-│   └── userEntity.js
-├── middleware/          # Express middleware
+│   ├── nurseEntity.js
+│   ├── patientEntity.js
+│   ├── quizResultEntity.js
+│   ├── triageEntity.js
+│   └── vitalsEntity.js
+├── middleware/         # Express middleware
 │   └── errorHandler.js
-├── models/              # Mongoose models
-│   └── userModel.js
-├── repositories/        # Data access layer
+├── models/            # Mongoose models
+│   ├── nurseModel.js
+│   ├── patientModel.js
+│   ├── quizResultModel.js
+│   ├── triageModel.js
+│   └── vitalsModel.js
+├── repositories/      # Data access layer
 │   ├── baseRepository.js
 │   ├── mockRepository.js
-│   └── userRepository.js
-├── routes/              # API routes
+│   ├── nurseRepository.js
+│   ├── patientRepository.js
+│   ├── quizResultRepository.js
+│   ├── triageRepository.js
+│   └── vitalsRepository.js
+├── routes/           # API routes
 │   ├── index.js
-│   └── userRoutes.js
-├── tests/               # Tests
+│   ├── nurseRoutes.js
+│   ├── patientRoutes.js
+│   ├── quizResultRoutes.js
+│   ├── triageRoutes.js
+│   └── vitalsRoutes.js
+├── tests/           # Tests
 │   ├── setup.js
 │   └── routes.test.js
-├── utils/               # Utility functions
+├── utils/           # Utility functions
 │   └── apiResponse.js
-├── .env                 # Environment variables
-├── package.json         # Dependencies
-├── README.md            # Documentation
-└── server.js            # Application entry point
+├── .env            # Environment variables
+├── package.json    # Dependencies
+├── README.md       # Documentation
+└── server.js       # Application entry point
 ```
 
 ## Getting Started
@@ -74,13 +94,73 @@ npm run dev
 
 ## API Endpoints
 
-### Users
+### Patients
+- `GET /api/patients/:id` - Get patient by ID
+- `POST /api/patients` - Create a new patient
 
-- `GET /api/users` - Get all users
-- `GET /api/users/:id` - Get user by ID
-- `POST /api/users` - Create a new user
-- `PUT /api/users/:id` - Update user
-- `DELETE /api/users/:id` - Delete user
+### Vitals
+- `GET /api/vitals/:id` - Get vitals by ID
+- `POST /api/vitals` - Create vitals
+- `PUT /api/vitals/:id` - Update vitals
+
+### Quiz Results
+- `GET /api/quiz-results/:id` - Get quiz result by ID
+- `POST /api/quiz-results` - Create quiz result
+
+### Triage
+- `GET /api/triage/:id` - Get triage by ID
+- `POST /api/triage` - Create triage
+- `PUT /api/triage/:id` - Update triage
+- `GET /api/triage/pending` - Get pending triages
+- `GET /api/triage/result/:id` - Get triage result
+- `POST /api/triage/release/:patientId` - Release patient from triage
+
+### Nurses
+- `GET /api/nurses/:id` - Get nurse by ID
+- `POST /api/nurses` - Create nurse
+- `PUT /api/nurses/:id` - Update nurse
+
+## Data Models
+
+### Patient
+- `id` (uuid/string)
+- `cpf` (string)
+- `name` (string)
+- `dateOfBirth` (timestamp)
+
+### Vitals
+- `id` (uuid/string)
+- `patientId` (uuid/string)
+- `temperature` (number - °C)
+- `heartRate` (number - beats per minute)
+- `oxygenSaturation` (number - % SpO2)
+- `systolicPressure` (number - mmHg)
+- `diastolicPressure` (number - mmHg)
+- `weight` (number - kg)
+
+### Quiz Result
+- `id` (uuid/string)
+- `patientId` (uuid/string)
+- `createdAt` (date)
+- `quizType` (string)
+- `answers` (string array)
+
+### Triage
+- `id` (uuid/string)
+- `patientId` (uuid/string)
+- `vitalsId` (uuid/string)
+- `quizId` (uuid/string)
+- `nurseId` (uuid/string)
+- `notes` (string)
+- `priorityNumber` (0-5)
+- `state` (string)
+- `createdAt` (date)
+
+### Nurse
+- `id` (uuid/string)
+- `name` (string)
+- `email` (string)
+- `password` (string)
 
 ## Testing
 
