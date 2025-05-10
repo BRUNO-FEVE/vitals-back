@@ -2,6 +2,7 @@ const express = require('express');
 const patientRoutes = require('./patientRoutes');
 const vitalsRoutes = require('./vitalsRoutes');
 const quizResultRoutes = require('./quizResultRoutes');
+const triageRoutes = require('./triageRoutes');
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.get('/', (req, res) => {
 router.use('/patients', patientRoutes);
 router.use('/vitals', vitalsRoutes);
 router.use('/quiz-results', quizResultRoutes);
+router.use('/triage', triageRoutes);
 // 404 handler for API routes
 router.use('*', (req, res) => {
   res.status(404).json({
