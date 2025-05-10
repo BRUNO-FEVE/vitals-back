@@ -1,17 +1,18 @@
-# Node.js MongoDB Template
 
-A scalable and maintainable Node.js template with MongoDB integration, repository pattern, and testing infrastructure for a medical triage system.
+# Vitals (Medical Triage System)
+
+A backend application designed to support an intelligent medical triage system for healthcare environments. This system streamlines patient evaluation by managing patient data, vital signs, quiz-based assessments, and triage prioritization using a scalable Node.js architecture integrated with MongoDB.
 
 ## Features
 
 - Modular architecture with clear separation of concerns
 - Repository pattern for data access abstraction
-- Mock repository for easier testing and development
-- MongoDB integration with Mongoose ODM
-- Express server with RESTful API
-- Environment configuration for local and AWS deployment
-- Error handling middleware
-- Testing infrastructure with Jest
+- Mock repository for testing and development purposes
+- MongoDB integration using Mongoose ODM
+- RESTful API built with Express
+- Environment configuration for local and cloud deployment
+- Centralized error handling middleware
+- Unit and integration testing with Jest
 
 ## Project Structure
 
@@ -19,51 +20,18 @@ A scalable and maintainable Node.js template with MongoDB integration, repositor
 /
 ├── config/              # Configuration files
 │   └── db.js           # Database connection
-├── controllers/         # Request handlers
-│   ├── nurseController.js
-│   ├── patientController.js
-│   ├── quizResultController.js
-│   ├── triageController.js
-│   └── vitalsController.js
-├── entities/           # Business entities
-│   ├── baseEntity.js
-│   ├── nurseEntity.js
-│   ├── patientEntity.js
-│   ├── quizResultEntity.js
-│   ├── triageEntity.js
-│   └── vitalsEntity.js
+├── controllers/         # API request handlers
+├── entities/           # Domain entities
 ├── middleware/         # Express middleware
-│   └── errorHandler.js
 ├── models/            # Mongoose models
-│   ├── nurseModel.js
-│   ├── patientModel.js
-│   ├── quizResultModel.js
-│   ├── triageModel.js
-│   └── vitalsModel.js
 ├── repositories/      # Data access layer
-│   ├── baseRepository.js
-│   ├── mockRepository.js
-│   ├── nurseRepository.js
-│   ├── patientRepository.js
-│   ├── quizResultRepository.js
-│   ├── triageRepository.js
-│   └── vitalsRepository.js
 ├── routes/           # API routes
-│   ├── index.js
-│   ├── nurseRoutes.js
-│   ├── patientRoutes.js
-│   ├── quizResultRoutes.js
-│   ├── triageRoutes.js
-│   └── vitalsRoutes.js
-├── tests/           # Tests
-│   ├── setup.js
-│   └── routes.test.js
-├── utils/           # Utility functions
-│   └── apiResponse.js
-├── .env            # Environment variables
-├── package.json    # Dependencies
-├── README.md       # Documentation
-└── server.js       # Application entry point
+├── tests/            # Tests
+├── utils/            # Utility functions
+├── .env              # Environment variables
+├── package.json      # Project metadata and dependencies
+├── README.md         # Documentation
+└── server.js         # Application entry point
 ```
 
 ## Getting Started
@@ -75,19 +43,21 @@ A scalable and maintainable Node.js template with MongoDB integration, repositor
 
 ### Installation
 
-1. Clone the repository
-2. Install dependencies:
+1. Clone the repository:
+```bash
+git clone <repository-url>
+```
 
+2. Install dependencies:
 ```bash
 npm install
 ```
 
 3. Configure environment variables:
    - Copy `.env.example` to `.env`
-   - Update the values as needed
+   - Update the values according to your environment
 
 4. Start the development server:
-
 ```bash
 npm run dev
 ```
@@ -95,30 +65,30 @@ npm run dev
 ## API Endpoints
 
 ### Patients
-- `GET /api/patients/:id` - Get patient by ID
-- `POST /api/patients` - Create a new patient
+- `GET /api/patients/:id` - Retrieve a patient by ID
+- `POST /api/patients` - Register a new patient
 
 ### Vitals
-- `GET /api/vitals/:id` - Get vitals by ID
-- `POST /api/vitals` - Create vitals
-- `PUT /api/vitals/:id` - Update vitals
+- `GET /api/vitals/:id` - Retrieve vitals by ID
+- `POST /api/vitals` - Record new vitals
+- `PUT /api/vitals/:id` - Update existing vitals
 
 ### Quiz Results
-- `GET /api/quiz-results/:id` - Get quiz result by ID
-- `POST /api/quiz-results` - Create quiz result
+- `GET /api/quiz-results/:id` - Retrieve a quiz result by ID
+- `POST /api/quiz-results` - Record a new quiz result
 
 ### Triage
-- `GET /api/triage/:id` - Get triage by ID
-- `POST /api/triage` - Create triage
+- `GET /api/triage/:id` - Retrieve triage by ID
+- `POST /api/triage` - Create a triage record
 - `PUT /api/triage/:id` - Update triage
-- `GET /api/triage/pending` - Get pending triages
-- `GET /api/triage/result/:id` - Get triage result
+- `GET /api/triage/pending` - Retrieve pending triages
+- `GET /api/triage/result/:id` - Retrieve triage result
 - `POST /api/triage/release/:patientId` - Release patient from triage
 
 ### Nurses
-- `GET /api/nurses/:id` - Get nurse by ID
-- `POST /api/nurses` - Create nurse
-- `PUT /api/nurses/:id` - Update nurse
+- `GET /api/nurses/:id` - Retrieve nurse by ID
+- `POST /api/nurses` - Register a new nurse
+- `PUT /api/nurses/:id` - Update nurse information
 
 ## Data Models
 
@@ -131,12 +101,12 @@ npm run dev
 ### Vitals
 - `id` (uuid/string)
 - `patientId` (uuid/string)
-- `temperature` (number - °C)
-- `heartRate` (number - beats per minute)
-- `oxygenSaturation` (number - % SpO2)
-- `systolicPressure` (number - mmHg)
-- `diastolicPressure` (number - mmHg)
-- `weight` (number - kg)
+- `temperature` (number, °C)
+- `heartRate` (number, bpm)
+- `oxygenSaturation` (number, % SpO2)
+- `systolicPressure` (number, mmHg)
+- `diastolicPressure` (number, mmHg)
+- `weight` (number, kg)
 
 ### Quiz Result
 - `id` (uuid/string)
@@ -164,19 +134,18 @@ npm run dev
 
 ## Testing
 
-Run tests with:
-
+Run all tests with:
 ```bash
 npm test
 ```
 
 ## Deployment
 
-This template is designed to be AWS-ready. For deployment:
+This project is ready for deployment on AWS or similar platforms. Steps:
 
 1. Set environment variables for production
 2. Build the application
-3. Deploy to AWS (EC2, ECS, Lambda, etc.)
+3. Deploy to your preferred environment (EC2, ECS, Lambda, etc.)
 
 ## License
 
