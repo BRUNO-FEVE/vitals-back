@@ -1,5 +1,4 @@
 const express = require('express');
-const userRoutes = require('./userRoutes');
 const patientRoutes = require('./patientRoutes');
 
 const router = express.Router();
@@ -13,7 +12,6 @@ router.get('/', (req, res) => {
 });
 
 // Mount routes
-router.use('/users', userRoutes);
 router.use('/patients', patientRoutes);
 
 // 404 handler for API routes
